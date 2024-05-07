@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 
 import globalErrorHandler from "./middlewares/globalErrorHandler";
 import { config } from "./config/config";
-import userRouter from "./routers/user";
+import userRouter from "./routers/user.router";
 import messageRouter from "./routers/message.router";
 
 const app = express();

@@ -1,6 +1,25 @@
-export interface User {
+export interface UserSchemaType {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  phone: string;
+  nic: string;
   password: string;
+  dob: Date;
+  gender: string;
+  role: Role;
+  doctorDepartment: string;
+  doctorAvatarImage: string;
+}
+
+export enum Gender {
+  Male = "male",
+  Female = "female",
+}
+
+export enum Role {
+  Admin = "admin",
+  Patient = "patient",
+  Doctor = "doctor",
 }

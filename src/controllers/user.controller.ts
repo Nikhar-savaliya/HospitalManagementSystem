@@ -4,15 +4,39 @@ import { sign } from "jsonwebtoken";
 
 import userModel from "../models/user";
 import { config } from "../config/config";
-import { User } from "../types/user";
+import { UserSchemaType } from "../types/user";
 import { encryptPassword, verifyPassword } from "../utils/password";
 
-const createUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password } = req.body;
+const registerPatient = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    password,
+    gender,
+    dob,
+    nic,
+    role,
+  } = req.body;
 
   // validation
-  if (!name || !email || !password) {
-    const error = createHttpError(400, "All fields are required");
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phone ||
+    !password ||
+    !gender ||
+    !dob ||
+    !nic ||
+    !role
+  ) {
+    const error = createHttpError(400, "Please provide all details");
     return next(error);
   }
 
@@ -31,13 +55,19 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   const hashedPassword = await encryptPassword(password);
-  let newUser: User;
+  let newUser: UserSchemaType;
   try {
     // new user
     newUser = await userModel.create({
-      name,
+      firstName,
+      lastName,
       email,
+      phone,
       password: hashedPassword,
+      gender,
+      dob: new Date(dob),
+      nic,
+      role,
     });
 
     res.status(201).json({
@@ -49,11 +79,13 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(createHttpError(400, "all fields are required"));
+  const { email, password, role } = req.body;
+  if (!email || !password || !role) {
+    return next(createHttpError(400, "Please provide all details"));
   }
-  let user: User | null;
+
+  let user: UserSchemaType | null;
+
   try {
     // finding user
     user = await userModel.findOne({ email });
@@ -66,17 +98,27 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     // comparing password
-    const isMatch = verifyPassword(password, user.password);
+    const isMatch = await verifyPassword(password, user.password);
     if (!isMatch) {
-      return next(createHttpError(400, "email or password incorrect"));
+      return next(createHttpError(400, "Incorrect password for this email"));
     }
-  } catch (error) {
-    return next(createHttpError(500, "failed to compare password" + error));
+  } catch (error: any) {
+    return next(createHttpError(500, error.message));
   }
+
+  try {
+    // comparing role
+    if (role !== user.role) {
+      return next(createHttpError(400, "Incorrect Role for this user"));
+    }
+  } catch (error: any) {
+    return next(createHttpError(500, error.message));
+  }
+
   try {
     // token generation JWT
     const token = sign({ sub: user._id }, config.jwtSecret as string, {
-      expiresIn: "7d",
+      expiresIn: config.jwtExpires,
     });
 
     // response
@@ -86,4 +128,4 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { createUser, loginUser };
+export { registerPatient, loginUser };
