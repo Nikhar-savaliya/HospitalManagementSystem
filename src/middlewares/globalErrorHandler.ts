@@ -23,10 +23,6 @@ const globalErrorHandler = (
     message = "json web token is expired, try again!";
   }
 
-  if (err.name === "CastError") {
-    message = `invalid ${err.path}`;
-  }
-
   return res.status(statusCode).json({
     status: false,
     message: message,

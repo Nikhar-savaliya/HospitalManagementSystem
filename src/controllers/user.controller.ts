@@ -122,10 +122,76 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     // response
-    res.status(201).json({ accessToken: token });
+    const cookieName = user.role === "admin" ? "adminToken" : "patientToken";
+    res
+      .status(200)
+      .cookie(cookieName, token, {
+        expires: new Date(
+          Date.now() + Number(config.cookieExpires) * 24 * 60 * 60 * 1000
+        ),
+      })
+      .json({
+        success: true,
+        message: "User Logged in Successfully",
+        user: user,
+      });
   } catch (error) {
     return next(createHttpError(500, "error while signing jwt token"));
   }
 };
 
-export { registerPatient, loginUser };
+const RegisterAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { firstName, lastName, email, phone, password, gender, dob, nic } =
+      req.body;
+
+    // validation
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !password ||
+      !gender ||
+      !dob ||
+      !nic
+    ) {
+      const error = createHttpError(400, "Please provide all details");
+      return next(error);
+    }
+
+    const isRegistered = await userModel.findOne({ email });
+    if (isRegistered) {
+      return next(
+        createHttpError(400, "Account with this email already exists.")
+      );
+    }
+
+    const newAdmin = await userModel.create({
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      gender,
+      dob: new Date(dob),
+      nic,
+      role: "admin",
+    });
+    newAdmin.save();
+
+    res.status(201).json({
+      success: true,
+      message: "New admin register successfully",
+    });
+  } catch (error: any) {
+    // next(createHttpError(error.statusCode, error.message));
+    console.log(error);
+  }
+};
+
+export { registerPatient, RegisterAdmin, loginUser };
