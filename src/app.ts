@@ -7,6 +7,7 @@ import globalErrorHandler from "./middlewares/globalErrorHandler";
 import { config } from "./config/config";
 import userRouter from "./routers/user.router";
 import messageRouter from "./routers/message.router";
+import appointmentRouter from "./routers/appointment.router";
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/appointments", appointmentRouter);
 
 // Global Error Handler
 app.use(globalErrorHandler);
