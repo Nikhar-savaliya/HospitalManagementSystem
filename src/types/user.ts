@@ -9,8 +9,11 @@ export interface UserSchemaType {
   dob: Date;
   gender: string;
   role: Role;
-  doctorDepartment: string;
-  doctorAvatarImage: string;
+  doctorDepartment?: string;
+  doctorAvatarImage?: {
+    public_id: string;
+    url: string;
+  };
 }
 
 export enum Gender {

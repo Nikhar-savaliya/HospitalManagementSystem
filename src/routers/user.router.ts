@@ -8,6 +8,7 @@ import {
   getLoggedInUserDetail,
   logoutAdmin,
   logoutPatient,
+  registerDoctor,
 } from "../controllers/user.controller";
 import {
   authenticateAdmin,
@@ -25,5 +26,6 @@ userRouter.get("/admin/profile", authenticateAdmin, getLoggedInUserDetail);
 userRouter.get("/patient/profile", authenticatePatient, getLoggedInUserDetail);
 userRouter.get("/admin/logout", authenticateAdmin, logoutAdmin);
 userRouter.get("/patient/logout", authenticatePatient, logoutPatient);
+userRouter.post("/doctor/register", authenticateAdmin, registerDoctor);
 
 export default userRouter;

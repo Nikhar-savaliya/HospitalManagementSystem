@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema<UserSchemaType>(
       type: String,
     },
     doctorAvatarImage: {
-      punblic_id: String,
+      public_id: String,
       url: String,
     },
   },

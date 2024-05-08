@@ -1,13 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { Message } from "../models/messageSchema";
-import { MessageSchemaType } from "../types/messageTypes";
 import createHttpError from "http-errors";
 
-export const sendMessage = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const sendMessage = async (req: Request, res: Response, next: NextFunction) => {
   const { firstName, lastName, email, phone, message } = req.body;
   if (!firstName || !lastName || !email || !phone || !message) {
     return next(createHttpError(400, "please fill all details"));
@@ -30,3 +25,21 @@ export const sendMessage = async (
     next(createHttpError(error.statusCode || 400, error.message));
   }
 };
+
+const getAllMessages = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const messages = await Message.find();
+    res.status(200).json({
+      success: true,
+      messages,
+    });
+  } catch (error) {
+    return next(createHttpError(500, "internal server Error"));
+  }
+};
+
+export { sendMessage, getAllMessages };

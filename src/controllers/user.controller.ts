@@ -6,6 +6,8 @@ import userModel from "../models/user";
 import { config } from "../config/config";
 import { UserSchemaType } from "../types/user";
 import { encryptPassword, verifyPassword } from "../utils/password";
+import cloudinary from "../config/cloudinary";
+import fileUpload from "express-fileupload";
 
 const registerPatient = async (
   req: Request,
@@ -262,6 +264,108 @@ const logoutPatient = async (
   }
 };
 
+const registerDoctor = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    if (!req.files || Object.keys(req.files).length == 0) {
+      return next(createHttpError(400, "Doctor Image is Required!"));
+    }
+    const { doctorAvatarImage } = req.files as {
+      doctorAvatarImage: fileUpload.UploadedFile;
+    };
+    const allowedFormats = [
+      "image/png",
+      "image/jpg",
+      "image/jpeg",
+      "image/webp",
+    ];
+    if (!allowedFormats.includes(doctorAvatarImage.mimetype)) {
+      return next(createHttpError(400, "this File format is not supported"));
+    }
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      gender,
+      dob,
+      nic,
+      doctorDepartment,
+    } = req.body;
+
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !password ||
+      !gender ||
+      !dob ||
+      !nic ||
+      !doctorDepartment
+    ) {
+      return next(
+        createHttpError(400, "please provide all details to register doctor")
+      );
+    }
+    const isRegistered = await userModel.findOne({ email });
+    if (isRegistered) {
+      return next(
+        createHttpError(
+          400,
+          `${isRegistered.role} already exists with this email.`
+        )
+      );
+    }
+
+    // upload to cloudinary
+    //@ts-ignore
+    const cloudinaryResponse = await cloudinary.uploader.upload(
+      doctorAvatarImage.tempFilePath
+    );
+    if (!cloudinaryResponse || cloudinaryResponse.error) {
+      console.error(
+        "cloudinary Error",
+        cloudinaryResponse.error || "unknown Cloudinary error"
+      );
+    }
+    console.log(cloudinaryResponse.secure_url);
+
+    const hashedPassword = await encryptPassword(password);
+
+    const newDoctor = await userModel.create({
+      firstName,
+      lastName,
+      email,
+      phone,
+      password: hashedPassword,
+      gender,
+      dob,
+      nic,
+      role: "doctor",
+      doctorDepartment,
+      doctorAvatarImage: {
+        public_id: cloudinaryResponse.public_id,
+        url: cloudinaryResponse.secure_url,
+      },
+    });
+
+    newDoctor.save();
+
+    res.status(201).json({
+      success: true,
+      message: "new doctor registered successfully",
+      doctor: newDoctor,
+    });
+  } catch (error) {
+    return next(createHttpError(500, "internal Server Error"));
+  }
+};
+
 export {
   registerPatient,
   RegisterAdmin,
@@ -270,4 +374,5 @@ export {
   getLoggedInUserDetail,
   logoutAdmin,
   logoutPatient,
+  registerDoctor,
 };
