@@ -131,6 +131,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
         expires: new Date(
           Date.now() + Number(config.cookieExpires) * 24 * 60 * 60 * 1000
         ),
+        httpOnly: true,
       })
       .json({
         success: true,
@@ -223,10 +224,50 @@ const getLoggedInUserDetail = async (
   }
 };
 
+const logoutAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res
+      .status(200)
+      .cookie("adminToken", "", {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+      })
+      .json({
+        success: true,
+        message: "user log out successfully",
+      });
+  } catch (error) {
+    next(createHttpError(500, "Internal Server Error"));
+  }
+};
+
+const logoutPatient = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res
+      .status(200)
+      .cookie("patientToken", "", {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+      })
+      .json({
+        success: true,
+        message: "Patient logged out successfully!",
+      });
+  } catch (error) {
+    next(createHttpError(500, "Internal Server Error"));
+  }
+};
+
 export {
   registerPatient,
   RegisterAdmin,
   loginUser,
   fetchAllDoctors,
   getLoggedInUserDetail,
+  logoutAdmin,
+  logoutPatient,
 };

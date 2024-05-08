@@ -6,6 +6,8 @@ import {
   RegisterAdmin,
   fetchAllDoctors,
   getLoggedInUserDetail,
+  logoutAdmin,
+  logoutPatient,
 } from "../controllers/user.controller";
 import {
   authenticateAdmin,
@@ -21,5 +23,7 @@ userRouter.post("/login", loginUser);
 userRouter.get("/doctors", fetchAllDoctors);
 userRouter.get("/admin/profile", authenticateAdmin, getLoggedInUserDetail);
 userRouter.get("/patient/profile", authenticatePatient, getLoggedInUserDetail);
+userRouter.get("/admin/logout", authenticateAdmin, logoutAdmin);
+userRouter.get("/patient/logout", authenticatePatient, logoutPatient);
 
 export default userRouter;
