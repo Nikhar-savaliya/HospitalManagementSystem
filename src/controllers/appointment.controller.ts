@@ -100,4 +100,72 @@ const bookAppointment = async (
   }
 };
 
-export default bookAppointment;
+const getAllAppointment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const allAppointment = await AppointmentModel.find();
+    res.status(200).json({
+      success: true,
+      allAppointment,
+    });
+  } catch (error) {}
+};
+
+const updateAppointmentStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    let appointment = await AppointmentModel.findById(id);
+    if (!appointment) {
+      return next(createHttpError(404, "appointment not found with this id"));
+    }
+    appointment = await AppointmentModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Appointment status updated successfully",
+      appointment,
+    });
+  } catch (error) {
+    console.log(error);
+    return next(createHttpError(500, "server error"));
+  }
+};
+
+const deleteAppointment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    let appointment = await AppointmentModel.findById(id);
+    if (!appointment) {
+      return next(createHttpError(404, "appointment not found with this id"));
+    }
+    await appointment.deleteOne();
+
+    res.status(200).json({
+      sucess: true,
+      message: "Appointment Deleted Successfully!",
+    });
+  } catch (error) {
+    return next(createHttpError(500, "server error"));
+  }
+};
+
+export {
+  bookAppointment,
+  getAllAppointment,
+  updateAppointmentStatus,
+  deleteAppointment,
+};
