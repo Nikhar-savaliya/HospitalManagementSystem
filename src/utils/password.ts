@@ -1,4 +1,7 @@
 import bcrypt from "bcrypt";
+import jwt, { JwtPayload } from "jsonwebtoken";
+
+import { config } from "../config/config";
 
 const saltRounds = 10;
 
@@ -25,4 +28,16 @@ const verifyPassword = async (userPassword: string, hashedPassword: string) => {
   }
 };
 
-export { encryptPassword, verifyPassword };
+const decodePassword = (token: string): JwtPayload => {
+  try {
+    const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
+    return decoded;
+  } catch (error) {
+    console.error("Token decoding failed with error:", error);
+    throw new Error(
+      error instanceof Error ? error.message : "Token decoding failed"
+    );
+  }
+};
+
+export { encryptPassword, verifyPassword, decodePassword };

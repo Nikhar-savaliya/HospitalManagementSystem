@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema<UserSchemaType>(
       minLength: [10, "phone must consist of 10 digits!"],
       maxLength: [10, "phone must consist of 10 digits!"],
     },
+    nic: {
+      type: String,
+      required: true,
+      minLength: [13, "NIC must consist of 13 digits!"],
+      maxLength: [13, "NIC must consist of 13 digits!"],
+    },
     dob: {
       type: Date,
       required: [true, "DOB is required"],

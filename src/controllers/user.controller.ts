@@ -109,7 +109,9 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // comparing role
     if (role !== user.role) {
-      return next(createHttpError(400, "Incorrect Role for this user"));
+      return next(
+        createHttpError(400, `${user.role} with this email already exists.`)
+      );
     }
   } catch (error: any) {
     return next(createHttpError(500, error.message));
@@ -117,7 +119,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
 
   try {
     // token generation JWT
-    const token = sign({ sub: user._id }, config.jwtSecret as string, {
+    const token = sign({ id: user._id }, config.jwtSecret as string, {
       expiresIn: config.jwtExpires,
     });
 
@@ -171,11 +173,13 @@ const RegisterAdmin = async (
       );
     }
 
+    const hashedPassword = await encryptPassword(password);
+
     const newAdmin = await userModel.create({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
       phone,
       gender,
       dob: new Date(dob),
@@ -189,9 +193,40 @@ const RegisterAdmin = async (
       message: "New admin register successfully",
     });
   } catch (error: any) {
-    // next(createHttpError(error.statusCode, error.message));
-    console.log(error);
+    next(createHttpError(error.statusCode, error.message));
   }
 };
 
-export { registerPatient, RegisterAdmin, loginUser };
+const fetchAllDoctors = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const allDoctors = await userModel.find({ role: "doctor" });
+    res.status(200).json({ success: true, doctors: allDoctors });
+  } catch (error) {
+    next(createHttpError(500, "failed to fetch all doctors."));
+  }
+};
+
+const getLoggedInUserDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = req.user;
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    next(createHttpError(500, "internal server error"));
+  }
+};
+
+export {
+  registerPatient,
+  RegisterAdmin,
+  loginUser,
+  fetchAllDoctors,
+  getLoggedInUserDetail,
+};
