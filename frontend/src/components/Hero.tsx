@@ -3,8 +3,8 @@ import heroImage from "@/assets/hero_image.jpg";
 
 const Hero: React.FC = () => {
   return (
-    <div className="grid sm:grid-cols-2 place-items-center">
-      <div className="py-36">
+    <div className="flex flex-col md:flex-row items-center">
+      <div className="py-36 w-full">
         <h1 className="scroll-m-20 text-4xl text-primary font-extrabold tracking-tight max-w-xl py-4">
           Welcome to S&S Medical Institute.Your trusted healthcare provider
         </h1>
@@ -16,10 +16,7 @@ const Hero: React.FC = () => {
         </p>
       </div>
       <div>
-        <img
-          src={heroImage}
-          className="max-sm:hidden aspect-square max-w-[400px] m-4"
-        />
+        <img src={heroImage} className=" aspect-square max-w-[400px] m-4" />
       </div>
     </div>
   );

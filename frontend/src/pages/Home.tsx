@@ -5,7 +5,7 @@ import MessageForm from "@/components/MessageForm";
 
 const Home = () => {
   return (
-    <div className="container flex flex-col gap-24">
+    <div className="container flex flex-col gap-24 w-full">
       <Hero />
       <Biography />
       <Departments />
