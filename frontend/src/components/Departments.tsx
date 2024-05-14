@@ -48,22 +48,20 @@ const Departments = () => {
   ];
 
   return (
-    <div>
-      <h2 className="scroll-m-20 text-4xl text-primary font-extrabold tracking-tight max-w-xl py-4">
-        Departments
-      </h2>
+    <div className="container">
+      <h2 className="h1 mt-16 mb-8 animate-in">Departments</h2>
       <Carousel className="mx-16">
         <CarouselContent className="gap-2">
           {departmentsArray.map((dep) => {
             return (
-              <CarouselItem className="md:basis-1/3 lg:basis-1/4 rounded-md py-8 text-center border-2 bg-secondary/20 text-xl font-semibold text-secondary-foreground">
+              <CarouselItem className="md:basis-1/3 lg:basis-1/5 rounded-md py-8 text-center border-2 bg-secondary/20 text-xl font-semibold text-secondary-foreground">
                 {dep.name}
               </CarouselItem>
             );
           })}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        {/* <CarouselPrevious /> */}
+        {/* <CarouselNext /> */}
       </Carousel>
     </div>
   );

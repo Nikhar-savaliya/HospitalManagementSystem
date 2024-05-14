@@ -1,25 +1,23 @@
 import React from "react";
-import AboutUs from "@/assets/about_us.jpg";
+import AboutUsImg from "@/assets/about_us.jpg";
 
-const Biography: React.FC = () => {
+const AboutUs: React.FC = () => {
   return (
-    <div className="flex items-start gap-8">
-      <img src={AboutUs} className="max-w-lg" />
-      <div>
-        <h2 className="scroll-m-20 text-3xl text-primary font-extrabold tracking-tight max-w-xl py-4">
-          Who are we?
-        </h2>
-        <ul className="list-disc px-4">
-          <li className="max-w-lg">
+    <div className="container md:grid md:grid-cols-12 md:gap-4 ">
+      <img src={AboutUsImg} className="w-fit col-span-4" />
+      <div className="col-span-6 col-start-6 w-full">
+        <h2 className="scroll-m-20 h1 max-sm:mt-4">Who are we?</h2>
+        <ul className="list-disc px-4 mt-2 ">
+          <li className="">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
             adipisci nihil pariatur neque ea distinctio corrupti, molestiae
             voluptate, alias ab illo voluptates esse exercitationem odit non.
             Quam neque magni inventore!
           </li>
-          <li className="max-w-lg">
+          <li className="">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
           </li>
-          <li className="max-w-lg">
+          <li className="">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
             adipisci nihil pariatur neque ea distinctio corrupti, molestiae
           </li>
@@ -29,4 +27,4 @@ const Biography: React.FC = () => {
   );
 };
 
-export default Biography;
+export default AboutUs;
