@@ -1,7 +1,10 @@
-import React, { FormEventHandler, useState } from "react";
+import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
+import { toast } from "./ui/use-toast";
+import { sendMessage } from "@/api/api";
+import { AxiosError } from "axios";
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -10,9 +13,37 @@ const MessageForm = () => {
   const [phone, setPhone] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(firstName, lastName, email, phone, message);
+    if (!firstName || !lastName || !email || !phone || !message) {
+      toast({
+        title: "Please Fill Entire Form",
+        variant: "destructive",
+        duration: 1500,
+      });
+    }
+    try {
+      const axoisResponse = await sendMessage({
+        firstName,
+        lastName,
+        email,
+        phone,
+        message,
+      });
+      toast({
+        title: axoisResponse.data.message,
+        variant: "success",
+        // duration: 1500,
+      });
+    } catch (error: any) {
+      console.log(error);
+      const msg = error.response.data.message || error.message;
+      toast({
+        title: msg,
+        variant: "destructive",
+        duration: 1500,
+      });
+    }
   };
 
   return (
