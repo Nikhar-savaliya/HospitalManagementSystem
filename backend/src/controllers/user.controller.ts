@@ -236,7 +236,7 @@ const logoutAdmin = async (req: Request, res: Response, next: NextFunction) => {
       })
       .json({
         success: true,
-        message: "user log out successfully",
+        message: "Admin logged out successfully",
       });
   } catch (error) {
     next(createHttpError(500, "Internal Server Error"));
@@ -257,7 +257,7 @@ const logoutPatient = async (
       })
       .json({
         success: true,
-        message: "Patient logged out successfully!",
+        message: "User logged out successfully!",
       });
   } catch (error) {
     next(createHttpError(500, "Internal Server Error"));

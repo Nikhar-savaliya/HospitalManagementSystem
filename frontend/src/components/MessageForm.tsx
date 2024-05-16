@@ -23,7 +23,7 @@ const MessageForm = () => {
       });
     }
     try {
-      const axoisResponse = await sendMessage({
+      const axiosResponse = await sendMessage({
         firstName,
         lastName,
         email,
@@ -31,9 +31,9 @@ const MessageForm = () => {
         message,
       });
       toast({
-        title: axoisResponse.data.message,
+        title: axiosResponse.data.message,
         variant: "success",
-        // duration: 1500,
+        duration: 1500,
       });
     } catch (error: any) {
       console.log(error);
@@ -52,7 +52,7 @@ const MessageForm = () => {
         onSubmit={handleSubmit}
         className="grid md:grid-cols-8 gap-4 my-6 bg-secondary text-secondary-foreground p-4"
       >
-        <h1 className="h1 col-span-8">Write your message</h1>
+        <h1 className="h1 col-span-8 my-4 ml-2">Write your message</h1>
         <Input
           type="text"
           placeholder="Firstname"

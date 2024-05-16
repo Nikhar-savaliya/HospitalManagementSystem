@@ -27,4 +27,13 @@ const sendMessage = async ({
   }
 };
 
-export { sendMessage };
+const LogoutUser = async () => {
+  try {
+    const response = api.get("/api/users/patient/logout");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { sendMessage, LogoutUser };

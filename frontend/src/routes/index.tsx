@@ -6,10 +6,12 @@ import AboutUs from "@/pages/AboutUs";
 import Register from "@/pages/Register";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
+import Layout from "@/Layout";
 
 const AppRouter = createBrowserRouter([
   {
     path: "/",
+    element: <Layout />,
     children: [
       { index: true, element: <Home /> },
       { path: "appointment", element: <Appointment /> },
