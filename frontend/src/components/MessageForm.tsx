@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { toast } from "./ui/use-toast";
 import { sendMessage } from "@/api/api";
-import { AxiosError } from "axios";
 
 const MessageForm = () => {
   const [firstName, setFirstName] = useState<string>("");

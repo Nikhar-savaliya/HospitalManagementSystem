@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -54,7 +53,10 @@ const Departments = () => {
         <CarouselContent className="space-x-2">
           {departmentsArray.map((dep) => {
             return (
-              <CarouselItem className="md:basis-1/3 lg:basis-1/5 rounded-md py-4 w-fit text-center border bg-secondary/20 text-xl font-semibold text-secondary-foreground">
+              <CarouselItem
+                key={dep.name}
+                className="md:basis-1/3 lg:basis-1/5 rounded-md py-4 w-fit text-center border bg-secondary/20 text-xl font-semibold text-secondary-foreground"
+              >
                 {dep.name}
               </CarouselItem>
             );
