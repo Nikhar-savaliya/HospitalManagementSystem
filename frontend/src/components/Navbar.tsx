@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useContext } from "react";
+import { MouseEventHandler, useContext } from "react";
 import { userContext } from "@/contexts/UserContext";
 import { LogoutUser } from "@/api/api";
 import { toast } from "./ui/use-toast";
@@ -82,13 +82,22 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <MobileNavigation />
+        <MobileNavigation
+          isAuthenticated={isAuthenticated}
+          handleLogout={handleLogout}
+        />
       </div>
     </div>
   );
 };
 
-const MobileNavigation = () => {
+const MobileNavigation = ({
+  isAuthenticated,
+  handleLogout,
+}: {
+  isAuthenticated: Boolean;
+  handleLogout: MouseEventHandler<HTMLButtonElement>;
+}) => {
   return (
     <nav className="md:hidden flex items-center justify-between">
       <span className="h1 text-lg text-secondary-foreground ">S&S Care</span>
@@ -123,12 +132,26 @@ const MobileNavigation = () => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <Link to={"/register"}>Register</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link to={"/login"}>Login</Link>
-          </DropdownMenuItem>
+          {isAuthenticated ? (
+            <>
+              <Button
+                className="w-full"
+                variant={"ghost"}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <DropdownMenuItem>
+                <Link to={"/register"}>Register</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to={"/login"}>Login</Link>
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>

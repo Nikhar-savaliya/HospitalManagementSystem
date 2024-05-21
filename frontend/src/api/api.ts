@@ -27,13 +27,36 @@ const sendMessage = async ({
   }
 };
 
+const loginUser = async ({
+  email,
+  password,
+  role,
+}: {
+  email: string;
+  password: string;
+  role: string;
+}) => {
+  try {
+    const axiosResponse = await api.post(
+      "/api/users/login",
+      { email, password, role },
+      { withCredentials: true, headers: { "Content-Type": "application/json" } }
+    );
+    return axiosResponse;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const LogoutUser = async () => {
   try {
-    const response = api.get("/api/users/patient/logout");
+    const response = api.get("/api/users/patient/logout", {
+      withCredentials: true,
+    });
     return response;
   } catch (error) {
     throw error;
   }
 };
 
-export { sendMessage, LogoutUser };
+export { sendMessage, loginUser, LogoutUser };
