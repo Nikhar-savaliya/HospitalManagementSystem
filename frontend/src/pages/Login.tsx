@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const { isAuthenticated, setIsAuthenticated, setUser, user } =
+  const { isAuthenticated, setIsAuthenticated, setUser } =
     useContext(userContext);
   const navigate = useNavigate();
 
@@ -50,7 +50,6 @@ const LoginPage = () => {
         });
         setIsAuthenticated(true);
         setUser(axiosResponse.data.user);
-        console.log(axiosResponse.data.user);
         navigate("/");
       }
     } catch (error: any) {
@@ -66,12 +65,12 @@ const LoginPage = () => {
   return isAuthenticated ? (
     <Navigate to={"/"} />
   ) : (
-    <section className="container flex items-center justify-center h-full max-w-2xl">
+    <section className="container pt-24 h-full max-w-2xl">
+      <h1 className="h1 my-4  flex items-center justify-center">Login</h1>
       <form
         onSubmit={handleUserLogin}
         className="flex flex-col gap-4 my-6 p-4 container"
       >
-        <h1 className="h1 my-4  flex items-center justify-center">Login</h1>
         <Input
           type="email"
           placeholder="email"
@@ -79,14 +78,14 @@ const LoginPage = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <Input
-          type="text"
-          placeholder="Lastname"
+          type="password"
+          placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Input
-          type="text"
-          placeholder="Email"
+          type="password"
+          placeholder="conform Password"
           value={conformPassword}
           onChange={(e) => setConformPassword(e.target.value)}
         />
