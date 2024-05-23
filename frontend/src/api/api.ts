@@ -100,4 +100,79 @@ const LogoutUser = async () => {
   }
 };
 
-export { sendMessage, loginUser, LogoutUser, registerPatient };
+const FetchAllDoctors = async () => {
+  try {
+    const response = await api.get("/api/users/doctors", {
+      withCredentials: true,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const BookAnAppointment = async ({
+  firstName,
+  lastName,
+  email,
+  phone,
+  nic,
+  dob,
+  gender,
+  appointment_date,
+  department,
+  doctor_firstName,
+  doctor_lastName,
+  hasVisited,
+  address,
+}: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  nic: string;
+  dob: string;
+  gender: string;
+  appointment_date: string;
+  department: string;
+  doctor_firstName: string;
+  doctor_lastName: string;
+  hasVisited: string | boolean;
+  address: string;
+}) => {
+  try {
+    const response = await api.post(
+      "/api/appointments/book",
+      {
+        firstName,
+        lastName,
+        email,
+        phone,
+        nic,
+        dob,
+        gender,
+        appointment_date,
+        department,
+        doctor_firstName,
+        doctor_lastName,
+        hasVisited,
+        address,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  sendMessage,
+  loginUser,
+  LogoutUser,
+  registerPatient,
+  FetchAllDoctors,
+  BookAnAppointment,
+};
