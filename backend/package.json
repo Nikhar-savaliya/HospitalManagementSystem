@@ -4,7 +4,6 @@
   "description": "this is backend starter code for express app using typescript and mongodb as server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.ts",
     "build": "tsc",
     "start": "node ./dist/index.js"

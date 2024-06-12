@@ -8,10 +8,9 @@ const Hero = ({ title, image }: { title: string; image: string }) => {
             : "Welcome to S&S Medical Institute.Your trusted healthcare provider"}
         </h1>
         <p className="max-w-xl leading-6 my-4 text-primary text-pretty">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis
-          corrupti ratione inventore eius voluptatibus aliquam adipisci, ab
-          officiis. Voluptatum, delectus at. Quasi quam officia sapiente. Ab
-          quas magni dignissimos illo.
+          we believe in enhancing healthcare through innovation and technology.
+          Our Hospital Management System (HMS) is designed to optimize every
+          aspect of hospital administration and patient management.
         </p>
       </div>
       <div>
@@ -19,8 +18,8 @@ const Hero = ({ title, image }: { title: string; image: string }) => {
           src={image}
           className="max-md:hidden aspect-square max-w-[400px] mb-24"
         />
+        </div>
       </div>
-    </div>
   );
 };
 

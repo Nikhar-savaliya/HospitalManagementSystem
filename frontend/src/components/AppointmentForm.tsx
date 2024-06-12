@@ -69,7 +69,6 @@ const AppointmentForm = () => {
       !department ||
       !doctorFirstName ||
       !doctorLastName ||
-      !hasVisited ||
       !address
     ) {
       return toast({
@@ -313,7 +312,7 @@ const AppointmentForm = () => {
             </label>
           </div>
           <Button className="flex col-span-8 mx-auto w-full items-center gap-1">
-            Login
+            Book Appointment
           </Button>
         </form>
       </section>

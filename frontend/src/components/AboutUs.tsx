@@ -9,17 +9,23 @@ const AboutUs: React.FC = () => {
         <h2 className="scroll-m-20 h1 max-sm:mt-4">Who are we?</h2>
         <ul className="list-disc px-4 mt-2 text-pretty">
           <li className="">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-            adipisci nihil pariatur neque ea distinctio corrupti, molestiae
-            voluptate, alias ab illo voluptates esse exercitationem odit non.
-            Quam neque magni inventore!
+            we are dedicated to revolutionizing healthcare management through
+            cutting-edge technology and innovative solutions. With a commitment
+            to excellence and a passion for improving patient care, we provide
+            comprehensive Hospital Management Systems (HMS) that cater to the
+            diverse needs of medical institutions worldwide.
           </li>
           <li className="">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+            Our mission is to empower hospitals and healthcare providers with
+            the tools they need to deliver exceptional care. We strive to create
+            seamless, efficient, and secure management systems that enhance the
+            overall patient experience and streamline hospital operations.
           </li>
           <li className="">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-            adipisci nihil pariatur neque ea distinctio corrupti, molestiae
+            As we continue to grow and evolve, we invite you to join us on our
+            mission to transform healthcare management. Whether you're a small
+            clinic or a large medical center, MediCare is here to support you
+            every step of the way.
           </li>
         </ul>
       </div>

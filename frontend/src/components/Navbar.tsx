@@ -42,9 +42,7 @@ const Navbar = () => {
       <div className="container p-4">
         {/* Desktop Naviagtion */}
         <div className="max-md:hidden flex items-center justify-between">
-          <span className="h1 text-lg text-secondary-foreground ">
-            S&S Care
-          </span>
+          <span className="h1 text-lg text-secondary-foreground ">HMS</span>
           <nav className="flex items-center gap-8 font-medium">
             <Link
               to={"/"}
@@ -100,7 +98,7 @@ const MobileNavigation = ({
 }) => {
   return (
     <nav className="md:hidden flex items-center justify-between">
-      <span className="h1 text-lg text-secondary-foreground ">S&S Care</span>
+      <span className="h1 text-lg text-secondary-foreground ">HMS</span>
       <DropdownMenu>
         <DropdownMenuTrigger className="p-1 bg-accent rounded-sm">
           <Menu width={20} />

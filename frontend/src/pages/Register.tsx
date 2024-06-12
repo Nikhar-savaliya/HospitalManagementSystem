@@ -168,7 +168,7 @@ const Register = () => {
           </SelectContent>
         </Select>
         <Button className="flex col-span-8 mx-auto w-full items-center gap-1">
-          Login
+          Register
         </Button>
         <div className="flex items-center gap-1 w-fit col-span-8 mx-auto">
           <p className="text-sm text-muted-foreground">

@@ -8,7 +8,7 @@ import Login from "@/pages/Login";
 import NotFound from "@/pages/NotFound";
 import Layout from "@/Layout";
 
-const AppRouter = createBrowserRouter([
+const  AppRouter = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
